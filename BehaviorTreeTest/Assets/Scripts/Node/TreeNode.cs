@@ -10,15 +10,19 @@ public abstract class TreeNode
 {
     public string Name;
 
-    public NodeType Type;
+    public NodeType NodeType;
 
     public int Priority;
 
+    protected bool isPlay;
+
     protected TreeNode Parent;
     protected List<TreeNode> Child;
-    protected abstract void Init();
-    protected abstract void OnDestory();
+    public abstract void Init();
+    public abstract void OnDestory();
     public abstract int IsPlay();
+    public abstract void Play(bool IsOverride = false);
+    public abstract void Stop();
 }
 
 //待扩展
@@ -26,10 +30,10 @@ public enum NodeType
 {
     Base,
     ActionNode,
+    SingleNode,
     QueueNode,
     ParallelNode,
     ParallelByNumNode,
-
 }
 
 /// <summary>
@@ -37,19 +41,21 @@ public enum NodeType
 /// </summary>
 public abstract class ControllerNode : TreeNode
 {
-    protected override void Init()
+    protected abstract bool CheckSelf();
+
+    protected abstract void FindChild();
+
+    public abstract override int IsPlay();
+
+    public override void Init()
     {
         Child = new List<TreeNode>();
     }
 
-    protected override void OnDestory()
+    public override void OnDestory()
     {
         Child.Clear();
     }
-
-    protected abstract bool CheckSelf();
-
-    protected abstract void FindChild();
 
     protected bool AddNode(TreeNode rNode)
     {
@@ -99,7 +105,18 @@ public abstract class ControllerNode : TreeNode
         return false;
     }
 
-    public abstract override int IsPlay();
+    public abstract override void Play(bool IsOverride = false);
+
+    public override void Stop()
+    {
+        if (Child != null)
+        {
+            for (int i = 0; i < Child.Count; i++)
+            {
+                Child[i].Stop();
+            }
+        }
+    }
 }
 
 /// <summary>
@@ -107,21 +124,23 @@ public abstract class ControllerNode : TreeNode
 /// </summary>
 public abstract class ActionController : TreeNode
 {
-    private bool isPlay;
-
-    protected override void Init()
+    public override void Init()
     {
-        Type = NodeType.ActionNode;
+        NodeType = NodeType.ActionNode;
     }
 
-    protected override void OnDestory()
+    public override void OnDestory()
     {
     }
 
-    protected void Play() { isPlay = true; }
+    public override void Play(bool IsOverride = false) { if (IsOverride || !isPlay) isPlay = true; this.Action(); }
 
-    protected void Stop() { isPlay = false; }
+    public override void Stop() { isPlay = false; this.ActionEnd(); }
 
     public override int IsPlay() { return isPlay ? 1 : 0; }
+
+    protected abstract void Action();
+
+    protected abstract void ActionEnd();
 }
 
