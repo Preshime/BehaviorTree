@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class SingleTest : SingleNode
 {
-    public SingleTest(ControllerNode Parent) : base(Parent)
+    public SingleTest(int Priority = 0)
     {
     }
 
     public override bool CheckSelf()
     {
         int i;
-        if (Model.TryGetValue<int>("123", out i))
-        {
-            return i < 5;
-        }
-        return false;
+        return Model.TryGetValue("single", out i) && i < 5;
     }
 
 }

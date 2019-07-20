@@ -6,13 +6,15 @@ public abstract class ParallelByNumNode : ControllerNode
 {
     public int ParallelNum;
 
-    private ParallelByNumNode(TreeNode Parent) : base(Parent)
+    private ParallelByNumNode()
     {
+        NodeType = NodeType.ParallelByNumNode;
     }
 
-    public ParallelByNumNode(TreeNode Parent, int Num) : base(Parent)
+    public ParallelByNumNode(TreeNode Parent, int Num, int Priority = 0)
     {
         ParallelNum = Num;
+        NodeType = NodeType.ParallelByNumNode;
     }
 
     public override int IsPlay()

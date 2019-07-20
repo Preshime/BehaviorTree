@@ -14,19 +14,31 @@ public abstract class TreeNode
 
     public int Priority;
 
-    public NodeModel Model;
+    private NodeModel rModel;
+    public NodeModel Model
+    {
+        get
+        {
+            if (Parent == null)
+                return rModel;
+            else
+                return Parent.rModel;
+        }
+        set
+        {
+            if (Parent == null)
+                rModel = value;
+        }
+    }
 
     protected bool isPlay;
 
-    protected TreeNode Parent;
+    public TreeNode Parent;
     protected List<TreeNode> Child;
 
-    public TreeNode(TreeNode Parent)
+    public TreeNode(int Priority = 0)
     {
-        this.Parent = Parent;
         Init();
-        if (Parent != null)
-            this.Model = Parent.Model;
     }
 
     public abstract void Init();
@@ -49,11 +61,11 @@ public enum NodeType
 }
 
 /// <summary>
-/// 控制节点父类，待进一步细化
+/// 控制节点父类
 /// </summary>
 public abstract class ControllerNode : TreeNode
 {
-    public ControllerNode(TreeNode Parent) : base(Parent)
+    public ControllerNode(int Priority = 0)
     {
     }
 
@@ -69,22 +81,27 @@ public abstract class ControllerNode : TreeNode
         Child.Clear();
     }
 
-    protected bool AddNode(TreeNode rNode)
+    public bool AddNode(TreeNode rNode)
     {
         try
         {
+            rNode.Parent = this;
             if (Child == null) Child = new List<TreeNode>();
             if (Child.Count == 0)
                 Child.Add(rNode);
             else
             {
+                bool isAdd = false;
                 for (int i = 0; i < Child.Count; i++)
                 {
                     if (Child[i].Priority < rNode.Priority)
                     {
+                        isAdd = true;
                         Child.Insert(i, rNode);
                     }
                 }
+                if (!isAdd)
+                    Child.Add(rNode);
             }
         }
         catch (Exception e)
@@ -94,7 +111,7 @@ public abstract class ControllerNode : TreeNode
         return true;
     }
 
-    protected bool RemoveNode(TreeNode rNode)
+    public bool RemoveNode(TreeNode rNode)
     {
         try
         {
@@ -107,7 +124,7 @@ public abstract class ControllerNode : TreeNode
         }
     }
 
-    protected bool RemoveNode(int nIndex)
+    public bool RemoveNode(int nIndex)
     {
         if (nIndex < Child.Count)
         {
@@ -132,13 +149,11 @@ public abstract class ControllerNode : TreeNode
 }
 
 /// <summary>
-/// 行为节点父类，待实例化
+/// 行为节点父类
 /// </summary>
 public abstract class ActionController : TreeNode
 {
-    public ActionController(TreeNode Parent) : base(Parent)
-    {
-    }
+    public ActionController(int Priority = 0) => NodeType = NodeType.ActionNode;
 
     public override void Init()
     {
