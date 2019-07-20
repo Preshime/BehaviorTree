@@ -14,10 +14,21 @@ public abstract class TreeNode
 
     public int Priority;
 
+    public NodeModel Model;
+
     protected bool isPlay;
 
     protected TreeNode Parent;
     protected List<TreeNode> Child;
+
+    public TreeNode(TreeNode Parent)
+    {
+        this.Parent = Parent;
+        Init();
+        if (Parent != null)
+            this.Model = Parent.Model;
+    }
+
     public abstract void Init();
     public abstract void OnDestory();
     public abstract int IsPlay();
@@ -42,6 +53,10 @@ public enum NodeType
 /// </summary>
 public abstract class ControllerNode : TreeNode
 {
+    public ControllerNode(TreeNode Parent) : base(Parent)
+    {
+    }
+
     public abstract override int IsPlay();
 
     public override void Init()
@@ -121,6 +136,10 @@ public abstract class ControllerNode : TreeNode
 /// </summary>
 public abstract class ActionController : TreeNode
 {
+    public ActionController(TreeNode Parent) : base(Parent)
+    {
+    }
+
     public override void Init()
     {
         NodeType = NodeType.ActionNode;

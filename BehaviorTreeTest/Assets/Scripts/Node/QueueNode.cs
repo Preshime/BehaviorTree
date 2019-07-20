@@ -19,12 +19,13 @@ public abstract class QueueNode : ControllerNode
         }
     }
 
-    public QueueNode()
-    {
-        Init();
-    }
+
 
     protected float CheckTime = 0.5f;
+
+    public QueueNode(TreeNode Parent) : base(Parent)
+    {
+    }
 
     public override int IsPlay()
     {

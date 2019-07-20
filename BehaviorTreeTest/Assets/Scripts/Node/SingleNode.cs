@@ -4,9 +4,8 @@ using UnityEngine;
 
 public abstract class SingleNode : ControllerNode
 {
-    public SingleNode()
+    public SingleNode(TreeNode Parent) : base(Parent)
     {
-        Init();
     }
 
     public override void Init()

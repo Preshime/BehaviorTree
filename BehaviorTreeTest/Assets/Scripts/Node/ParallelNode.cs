@@ -6,9 +6,8 @@ public abstract class ParallelNode : ControllerNode
 {
     private int nPlayNum;
 
-    public ParallelNode()
+    public ParallelNode(TreeNode Parent) : base(Parent)
     {
-        Init();
     }
 
     public override int IsPlay()

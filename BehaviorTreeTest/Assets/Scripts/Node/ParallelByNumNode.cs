@@ -6,9 +6,12 @@ public abstract class ParallelByNumNode : ControllerNode
 {
     public int ParallelNum;
 
-    public ParallelByNumNode(int Num)
+    private ParallelByNumNode(TreeNode Parent) : base(Parent)
     {
-        Init();
+    }
+
+    public ParallelByNumNode(TreeNode Parent, int Num) : base(Parent)
+    {
         ParallelNum = Num;
     }
 
