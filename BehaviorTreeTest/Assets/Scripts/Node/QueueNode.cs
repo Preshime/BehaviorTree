@@ -24,8 +24,6 @@ public abstract class QueueNode : ControllerNode
         Init();
     }
 
-    protected abstract override bool CheckSelf();
-
     protected float CheckTime = 0.5f;
 
     public override int IsPlay()
