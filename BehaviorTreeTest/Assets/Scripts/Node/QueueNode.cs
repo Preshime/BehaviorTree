@@ -6,14 +6,14 @@ using UnityEngine;
 
 public abstract class QueueNode : ControllerNode
 {
-    private int iPlayIndex;
+    private int nPlayIndex;
 
     private int PlayIndex
     {
-        get { return iPlayIndex; }
+        get { return nPlayIndex; }
         set
         {
-            iPlayIndex = value;
+            nPlayIndex = value;
             if (value != 0)
                 IndexChange();
         }
@@ -33,20 +33,16 @@ public abstract class QueueNode : ControllerNode
         return isPlay ? 1 : 0;
     }
 
-    protected override void FindChild()
-    {
-    }
-
     public override void Play(bool IsOverride)
     {
         isPlay = true;
         if (Child != null && CheckSelf())
         {
-            iPlayIndex = 0;
+            nPlayIndex = 0;
             Child[0].Play();
             Action<int> action = t =>
             {
-                StartQuequ();
+                StartQueue();
             };
 
             action.BeginInvoke(0, null, null);
@@ -56,10 +52,10 @@ public abstract class QueueNode : ControllerNode
     public override void Stop()
     {
         isPlay = false;
-        if (Child != null && iPlayIndex < Child.Count)
+        if (Child != null && nPlayIndex < Child.Count)
         {
-            Child[iPlayIndex].Stop();
-            iPlayIndex = 0;
+            Child[nPlayIndex].Stop();
+            nPlayIndex = 0;
         }
     }
 
@@ -76,7 +72,7 @@ public abstract class QueueNode : ControllerNode
         base.OnDestory();
     }
 
-    private void StartQuequ()
+    private void StartQueue()
     {
         while (isPlay)
         {

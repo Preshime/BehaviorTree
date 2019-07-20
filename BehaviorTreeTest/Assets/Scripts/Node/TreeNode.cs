@@ -23,6 +23,7 @@ public abstract class TreeNode
     public abstract int IsPlay();
     public abstract void Play(bool IsOverride = false);
     public abstract void Stop();
+    public abstract bool CheckSelf();
 }
 
 //待扩展
@@ -41,10 +42,6 @@ public enum NodeType
 /// </summary>
 public abstract class ControllerNode : TreeNode
 {
-    protected abstract bool CheckSelf();
-
-    protected abstract void FindChild();
-
     public abstract override int IsPlay();
 
     public override void Init()
