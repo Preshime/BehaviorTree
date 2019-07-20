@@ -6,7 +6,7 @@ using System.Threading;
 
 public class ActionTest : ActionController
 {
-    public ActionTest(int Priority = 0)
+    public ActionTest(int Priority = 0) : base(Priority)
     {
     }
 
@@ -19,11 +19,11 @@ public class ActionTest : ActionController
     protected override void Action()
     {
         Debug.Log($"{Name}:action Start");
-        Action<bool> action = b =>
-         {
-             Act(b);
-         };
-        action.BeginInvoke(true, null, null);
+        //Action<bool> action = b =>
+        // {
+        //     Act(b);
+        // };
+        //action.BeginInvoke(true, null, null);
     }
 
     protected override void ActionEnd()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ActionTest2 : ActionController
 {
-    public ActionTest2(int Priority = 0)
+    public ActionTest2(int Priority = 0) : base(Priority)
     {
     }
 

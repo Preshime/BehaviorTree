@@ -6,7 +6,7 @@ public abstract class ParallelNode : ControllerNode
 {
     private int nPlayNum;
 
-    public ParallelNode(TreeNode Parent, int Priority = 0) => NodeType = NodeType.ParallelNode;
+    public ParallelNode(TreeNode Parent, int Priority) { NodeType = NodeType.ParallelNode; this.Priority = Priority; }
 
 
     public override int IsPlay()

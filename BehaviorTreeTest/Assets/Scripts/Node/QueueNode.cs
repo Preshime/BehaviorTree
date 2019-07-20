@@ -23,7 +23,7 @@ public abstract class QueueNode : ControllerNode
 
     protected float CheckTime = 0.5f;
 
-    public QueueNode(int Priority = 0) => NodeType = NodeType.QueueNode;
+    public QueueNode(int Priority) { NodeType = NodeType.QueueNode; this.Priority = Priority; }
 
     public override int IsPlay()
     {

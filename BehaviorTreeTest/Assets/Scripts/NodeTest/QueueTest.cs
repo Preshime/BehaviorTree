@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QueueTest : QueueNode
 {
-    public QueueTest(int Priority = 0)
+    public QueueTest(int Priority = 0) : base(Priority)
     {
     }
 

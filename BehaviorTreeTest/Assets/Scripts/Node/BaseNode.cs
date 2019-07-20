@@ -7,6 +7,7 @@ public class BaseNode : ControllerNode
     public BaseNode()
     {
         NodeType = NodeType.Base;
+        this.Priority = 0;
     }
 
     public override bool CheckSelf()

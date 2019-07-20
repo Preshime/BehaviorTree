@@ -36,11 +36,6 @@ public abstract class TreeNode
     public TreeNode Parent;
     protected List<TreeNode> Child;
 
-    public TreeNode(int Priority = 0)
-    {
-        Init();
-    }
-
     public abstract void Init();
     public abstract void OnDestory();
     public abstract int IsPlay();
@@ -65,9 +60,7 @@ public enum NodeType
 /// </summary>
 public abstract class ControllerNode : TreeNode
 {
-    public ControllerNode(int Priority = 0)
-    {
-    }
+
 
     public abstract override int IsPlay();
 
@@ -97,7 +90,9 @@ public abstract class ControllerNode : TreeNode
                     if (Child[i].Priority < rNode.Priority)
                     {
                         isAdd = true;
+                        Debug.Log("index:" + i);
                         Child.Insert(i, rNode);
+                        break;
                     }
                 }
                 if (!isAdd)
@@ -153,7 +148,7 @@ public abstract class ControllerNode : TreeNode
 /// </summary>
 public abstract class ActionController : TreeNode
 {
-    public ActionController(int Priority = 0) => NodeType = NodeType.ActionNode;
+    public ActionController(int Priority) { NodeType = NodeType.ActionNode; this.Priority = Priority; }
 
     public override void Init()
     {
@@ -166,7 +161,7 @@ public abstract class ActionController : TreeNode
 
     public override void Play(bool IsOverride = false) { if (IsOverride || !isPlay) isPlay = true; this.Action(); }
 
-    public override void Stop() { isPlay = false; this.ActionEnd(); }
+    public override void Stop() { if (isPlay) { isPlay = false; this.ActionEnd(); } }
 
     public override int IsPlay() { return isPlay ? 1 : 0; }
 

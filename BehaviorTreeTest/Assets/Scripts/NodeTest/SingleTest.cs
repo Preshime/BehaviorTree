@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SingleTest : SingleNode
 {
-    public SingleTest(int Priority = 0)
+    public SingleTest(int Priority = 0) : base(Priority)
     {
     }
 
