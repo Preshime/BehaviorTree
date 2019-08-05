@@ -23,7 +23,7 @@ public abstract class ParallelByNumNode : ControllerNode
         throw new System.NotImplementedException();
     }
 
-    public override void Play(bool IsOverride = false)
+    public override bool Play(bool IsOverride = false)
     {
         if (Child != null && CheckSelf())
         {
@@ -35,10 +35,12 @@ public abstract class ParallelByNumNode : ControllerNode
                     if (!isPlay) isPlay = true;
                     Child[i].Play();
                     if (++nPlayNum >= ParallelNum)
-                        return;
+                        break;
                 }
             }
+            return nPlayNum > 0;
         }
+        return false;
     }
 
     public override void Stop()

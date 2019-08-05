@@ -32,14 +32,15 @@ public class BaseNode : ControllerNode
         return 0;
     }
 
-    public override void Play(bool IsOverride = false)
+    public override bool Play(bool IsOverride = false)
     {
         if (Child != null)
         {
             for (int i = 0; i < Child.Count; i++)
             {
-                Child[i].Play();
+                Child[i].Play(IsOverride);
             }
         }
+        return false;
     }
 }

@@ -12,17 +12,18 @@ public abstract class SingleNode : ControllerNode
         NodeType = NodeType.SingleNode;
     }
 
-    public override void Play(bool IsOverride = false)
+    public override bool Play(bool IsOverride = false)
     {
         if (Child != null && CheckSelf())
         {
             for (int i = 0; i < Child.Count; i++)
             {
                 isPlay = true;
-                Child[i].Play();
-                return;
+                if (Child[i].Play())
+                    return true;
             }
         }
+        return false;
     }
 
     public override void Stop()

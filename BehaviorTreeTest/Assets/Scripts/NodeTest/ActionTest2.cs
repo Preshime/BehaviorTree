@@ -12,7 +12,14 @@ public class ActionTest2 : ActionController
     public override bool CheckSelf()
     {
         bool b;
-        return Model.TryGetValue("action2", out b) && b;
+        string s;
+        if ((Model.TryGetValue("action2", out b) && b) || (Model.TryGetValue("111", out s) && s == "111"))
+        {
+            //Model.SetTagIsPlayed("action2");
+            //Model.SetTagIsPlayed("111");
+            return true;
+        }
+        return false;
     }
 
     protected override void Action()

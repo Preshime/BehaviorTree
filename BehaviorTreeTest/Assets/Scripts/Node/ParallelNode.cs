@@ -14,7 +14,7 @@ public abstract class ParallelNode : ControllerNode
         return nPlayNum;
     }
 
-    public override void Play(bool IsOverride = false)
+    public override bool Play(bool IsOverride = false)
     {
         if (Child != null && CheckSelf())
         {
@@ -23,7 +23,9 @@ public abstract class ParallelNode : ControllerNode
                 isPlay = true;
                 Child[i].Play();
             }
+            return isPlay;
         }
+        return false;
     }
 
     public override void Stop()

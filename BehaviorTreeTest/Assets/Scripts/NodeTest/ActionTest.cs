@@ -12,8 +12,13 @@ public class ActionTest : ActionController
 
     public override bool CheckSelf()
     {
-        bool b;
-        return Model.TryGetValue("action", out b) && b;
+        bool b = false;
+        if (Model.TryGetValue("action", out b) && b)
+        {
+            Model.SetTagIsPlayed("action");
+            return true;
+        }
+        return false;
     }
 
     protected override void Action()

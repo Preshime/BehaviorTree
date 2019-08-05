@@ -1,18 +1,22 @@
 ﻿
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BehaviorController : MonoBehaviour
 {
     private BaseNode behavior;
+
+    public Text text;
 
     private void Start()
     {
         if (behavior == null)
             behavior = new BaseNode();
 
-        behavior.Model = new NodeModel();
+        behavior.Model = new NodeModel(behavior);
         behavior.Model.SetValue("queue", "111");
+        behavior.Model.SetValue("111", "111");
         behavior.Model.SetValue("action2", true);
         behavior.Model.SetValue("action", true);
         behavior.Model.SetValue("single", 2);
@@ -62,6 +66,17 @@ public class BehaviorController : MonoBehaviour
     private void Update()
     {
         // Debug.Log("updating");
+    }
+
+    public void InputEnd()
+    {
+        Debug.Log(text.text);
+        string rInput = text.text;
+        if (rInput.IndexOf('=') != -1)
+        {
+            string[] rInputs = rInput.Split('=');
+            behavior.Model.SetValue(rInputs[0], rInputs[1]);
+        }
     }
 }
 

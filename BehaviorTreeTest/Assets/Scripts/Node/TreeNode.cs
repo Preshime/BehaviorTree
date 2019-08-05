@@ -22,7 +22,7 @@ public abstract class TreeNode
             if (Parent == null)
                 return rModel;
             else
-                return Parent.rModel;
+                return Parent.Model;
         }
         set
         {
@@ -39,7 +39,7 @@ public abstract class TreeNode
     public abstract void Init();
     public abstract void OnDestory();
     public abstract int IsPlay();
-    public abstract void Play(bool IsOverride = false);
+    public abstract bool Play(bool IsOverride = false);
     public abstract void Stop();
     public abstract bool CheckSelf();
 }
@@ -129,7 +129,7 @@ public abstract class ControllerNode : TreeNode
         return false;
     }
 
-    public abstract override void Play(bool IsOverride = false);
+    public abstract override bool Play(bool IsOverride = false);
 
     public override void Stop()
     {
@@ -159,7 +159,16 @@ public abstract class ActionController : TreeNode
     {
     }
 
-    public override void Play(bool IsOverride = false) { if (IsOverride || !isPlay) isPlay = true; this.Action(); }
+    public override bool Play(bool IsOverride = false)
+    {
+        if ((IsOverride || !isPlay) && CheckSelf())
+        {
+            isPlay = true;
+            this.Action();
+            return true;
+        }
+        return false;
+    }
 
     public override void Stop() { if (isPlay) { isPlay = false; this.ActionEnd(); } }
 

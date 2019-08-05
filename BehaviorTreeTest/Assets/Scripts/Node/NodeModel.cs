@@ -3,14 +3,28 @@ using System.Collections.Generic;
 
 public class NodeModel // 树上的所有数据来源
 {
+    public NodeModel(TreeNode rNode)
+    {
+        BaseNode = rNode;
+    }
+
+    private TreeNode BaseNode;
+
     private Dictionary<string, int> Integer = new Dictionary<string, int>();
     private Dictionary<string, float> Float = new Dictionary<string, float>();
     private Dictionary<string, bool> Boolean = new Dictionary<string, bool>();
     private Dictionary<string, string> String = new Dictionary<string, string>();
     private Dictionary<string, object> Obj = new Dictionary<string, object>();
 
+    private Dictionary<string, bool> TagIsPlay = new Dictionary<string, bool>();
+
     public void SetValue<T>(string key, T value)
     {
+        if (TagIsPlay.ContainsKey(key))
+            TagIsPlay[key] = false;
+        else
+            TagIsPlay.Add(key, false);
+
         if (typeof(T) == typeof(int))
         {
             int i = (int)(object)value;
@@ -51,10 +65,18 @@ public class NodeModel // 树上的所有数据来源
             else
                 Obj.Add(key, o);
         }
+
+        BaseNode.Play();
     }
 
     public bool TryGetValue<T>(string key, out T obj)
     {
+        bool bIsPlayed;
+        if (!TagIsPlay.TryGetValue(key, out bIsPlayed) || bIsPlayed)
+        {
+            obj = default(T);
+            return false;
+        }
         if (typeof(T) == typeof(int))
         {
             int i = 0;
@@ -92,5 +114,11 @@ public class NodeModel // 树上的所有数据来源
         }
     }
 
-
+    public void SetTagIsPlayed(string tag)
+    {
+        if (TagIsPlay.ContainsKey(tag))
+            TagIsPlay[tag] = true;
+        else
+            TagIsPlay.Add(tag, true);
+    }
 }

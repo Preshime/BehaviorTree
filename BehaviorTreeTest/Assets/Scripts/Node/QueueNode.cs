@@ -30,11 +30,11 @@ public abstract class QueueNode : ControllerNode
         return isPlay ? 1 : 0;
     }
 
-    public override void Play(bool IsOverride)
+    public override bool Play(bool IsOverride)
     {
-        isPlay = true;
         if (Child != null && CheckSelf())
         {
+            isPlay = true;
             nPlayIndex = 0;
             Child[0].Play();
             Action<int> action = t =>
@@ -43,7 +43,9 @@ public abstract class QueueNode : ControllerNode
             };
 
             action.BeginInvoke(0, null, null);
+            return true;
         }
+        return false;
     }
 
     public override void Stop()
