@@ -10,7 +10,7 @@ public class BehaviorTreeController : MonoBehaviour
     public Dictionary<int, BaseNode> BaseNodeList = new Dictionary<int, BaseNode>();
     Dictionary<int, Dictionary<string, AIAction>> mAllMsg = new Dictionary<int, Dictionary<string, AIAction>>();
 
-    void Start()
+    void Awake()
     {
         Instance = this;
     }
@@ -26,16 +26,18 @@ public class BehaviorTreeController : MonoBehaviour
     }
 
 
-    public void CreateTree(Dictionary<int, Dictionary<int, List<string>>> rTreesMsg)
+    public void CreateTree()
     {
+        var rTreesMsg = ConfigTest.Instance.TreeDic;
         foreach (var rTreeMsg in rTreesMsg)
         {
             BaseNode rTreeBase = new BaseNode()
             {
-                ID = rTreeMsg.Key,
+                TreeID = rTreeMsg.Key,
             };
             rTreeBase.Model = new NodeModel(rTreeBase);
-            this.BaseNodeList.Add(rTreeMsg.Key, rTreeBase);
+
+            this.BaseNodeList.Add(rTreeMsg.Key, RefleTest.CreateTree(rTreeBase, rTreeBase.TreeID, rTreeMsg.Value[0]));
         }
     }
 

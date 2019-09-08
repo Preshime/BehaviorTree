@@ -4,3 +4,7 @@
 3:SingleTest;
 4:QueueTest;
 5:ParallelTest;
+6:Go4PlayerController;
+7:MoveAroundController;
+8:RedController;
+9:ParallelTest;

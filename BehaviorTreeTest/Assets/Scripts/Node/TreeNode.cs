@@ -7,6 +7,8 @@ using UnityEngine;
 //父类
 public abstract class TreeNode
 {
+    public TreeNode() { }
+
     public int ID;
 
     private int nTreeID;
@@ -56,6 +58,7 @@ public abstract class TreeNode
     public abstract bool Play(bool IsOverride = false);
     public abstract void Stop();
     public abstract bool CheckSelf();
+    public abstract bool AddNode(TreeNode rNode);
 }
 
 //待扩展
@@ -88,7 +91,7 @@ public abstract class ControllerNode : TreeNode
         Child.Clear();
     }
 
-    public bool AddNode(TreeNode rNode)
+    public override bool AddNode(TreeNode rNode)
     {
         try
         {
@@ -171,7 +174,8 @@ public abstract class ActionController : TreeNode
         this.mWorldFlag = rWorldFlag;
     }
 
-
+    public override bool AddNode(TreeNode rNode)
+    { return false; }
 
     public override void Init()
     {

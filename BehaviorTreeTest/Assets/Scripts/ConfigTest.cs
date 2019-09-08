@@ -8,10 +8,10 @@ public class ConfigTest : MonoBehaviour
 
     public static ConfigTest Instance { get; private set; }
 
-    public Dictionary<int, Dictionary<int, List<string>>> rTreeDic = new Dictionary<int, Dictionary<int, List<string>>>();
+    public Dictionary<int, Dictionary<int, List<string>>> TreeDic = new Dictionary<int, Dictionary<int, List<string>>>();
     public Dictionary<int, string> NodeName = new Dictionary<int, string>();
 
-    void Awake()
+    void Start()
     {
         Instance = this;
         Init();
@@ -50,7 +50,7 @@ public class ConfigTest : MonoBehaviour
                     rMsgDic.Add(nID, rMsgArr);
                 }
             }
-            rTreeDic.Add(nTreeID, rMsgDic);
+            TreeDic.Add(nTreeID, rMsgDic);
         }
 
         TextAsset rNode = Resources.Load("NodeConfig") as TextAsset;
@@ -68,6 +68,7 @@ public class ConfigTest : MonoBehaviour
             }
         }
         Debug.Log("配置加载完成");
+        BehaviorTreeController.Instance.CreateTree();
     }
 
 

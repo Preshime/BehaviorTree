@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    private List<AIAction> mActions;
+    private List<AIAction> mActions = new List<AIAction>();
 
     public float Speed;
     public float AddSpeed;
