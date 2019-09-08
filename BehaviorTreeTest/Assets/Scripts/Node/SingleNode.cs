@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class SingleNode : ControllerNode
 {
+    public SingleNode() { NodeType = NodeType.SingleNode; this.Priority = 0; }
+
     public SingleNode(int Priority) { NodeType = NodeType.SingleNode; this.Priority = Priority; }
 
     public override void Init()

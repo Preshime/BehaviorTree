@@ -25,9 +25,9 @@ public class NodeModel // 树上的所有数据来源
     public void SetValue<T>(string key, T value)
     {
         if (TagChanged.ContainsKey(key))
-            TagChanged[key] = false;
+            TagChanged[key] = true;
         else
-            TagChanged.Add(key, false);
+            TagChanged.Add(key, true);
 
         if (TagIsPlayed.ContainsKey(key))
             TagIsPlayed[key] = false;
@@ -79,47 +79,43 @@ public class NodeModel // 树上的所有数据来源
 
     public bool TryGetValue<T>(string key, out T obj)
     {
-        bool bIsPlayed;
-        if (!TagChanged.TryGetValue(key, out bIsPlayed) || bIsPlayed)
-        {
-            obj = default(T);
-            return false;
-        }
+        bool isSuccess;
         if (typeof(T) == typeof(int))
         {
             int i = 0;
-            bool isSuccess = Integer.TryGetValue(key, out i);
+            isSuccess = Integer.TryGetValue(key, out i);
             obj = (T)(object)i;
-            return isSuccess;
         }
         else if (typeof(T) == typeof(float))
         {
             float f = 0f;
-            bool isSuccess = Float.TryGetValue(key, out f);
+            isSuccess = Float.TryGetValue(key, out f);
             obj = (T)(object)f;
-            return isSuccess;
         }
         else if (typeof(T) == typeof(bool))
         {
             bool b = false;
-            bool isSuccess = Boolean.TryGetValue(key, out b);
+            isSuccess = Boolean.TryGetValue(key, out b);
             obj = (T)(object)b;
-            return isSuccess;
         }
         else if (typeof(T) == typeof(string))
         {
             string s = "";
-            bool isSuccess = String.TryGetValue(key, out s);
+            isSuccess = String.TryGetValue(key, out s);
             obj = (T)(object)s;
-            return isSuccess;
         }
         else
         {
             object o;
-            bool isSuccess = Obj.TryGetValue(key, out o);
+            isSuccess = Obj.TryGetValue(key, out o);
             obj = (T)o;
-            return isSuccess;
         }
+        if (!isSuccess)
+        {
+            obj = default(T);
+            this.SetValue(key, obj);
+        }
+        return isSuccess;
     }
 
     public void SetTagIsPlayed(string tag)
@@ -144,12 +140,17 @@ public class NodeModel // 树上的所有数据来源
 
     public void OnUpdate()
     {
+        var r = new List<string>();
         foreach (var tag in TagChanged)
         {
-            string key = tag.Key;
-            if (TagIsPlayed[key] && !TagChanged[key])
+            r.Add(tag.Key);
+        }
+        foreach (var tag in r)
+        {
+            string key = tag;
+            if (TagIsPlayed[key] && TagChanged[key])
             {
-                TagChanged[key] = true;
+                TagChanged[key] = false;
             }
         }
     }

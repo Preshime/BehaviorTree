@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class RedController : ActionController
 {
-    public RedController(int rPriority) : base(rPriority, "Red")
+    public RedController() : base(0, "Red",true)
+    {
+    }
+
+    public RedController(int rPriority) : base(rPriority, "Red", true)
     {
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,9 @@ public class ConfigTest : MonoBehaviour
     void Start()
     {
         Instance = this;
+
+        //var r = Type.GetType("RedController");
+        //Debug.Log(r);
         Init();
     }
 

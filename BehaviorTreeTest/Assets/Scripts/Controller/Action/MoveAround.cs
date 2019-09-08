@@ -16,6 +16,10 @@ public class MoveAround : AIAction
 
     public void OnUpdate(GameObject rGO)
     {
+        if (mEC == null)
+        {
+            mEC = rGO.GetComponent<EnemyController>();
+        }
         //巡逻
         Vector3 rAsp;
         if (mEC.ToStart)

@@ -6,7 +6,7 @@ using System.Threading;
 
 public class ActionTest : ActionController
 {
-    public ActionTest(int Priority = 0) : base(Priority, "action")
+    public ActionTest(int Priority = 0) : base(Priority, "action", false)
     {
     }
 

@@ -15,13 +15,13 @@ public class BehaviorTreeController : MonoBehaviour
         Instance = this;
     }
 
-    void Update()
+    public void OnUpdate()
     {
         WorldModel.Instance.OnUpdate();
-        for (int i = 0; i < BaseNodeList.Count; i++)
+        foreach (var i in BaseNodeList)
         {
-            BaseNodeList[i].Play();
-            BaseNodeList[i].Model.OnUpdate();
+            BaseNodeList[i.Key].Play();
+            BaseNodeList[i.Key].Model.OnUpdate();
         }
     }
 
@@ -38,6 +38,7 @@ public class BehaviorTreeController : MonoBehaviour
             rTreeBase.Model = new NodeModel(rTreeBase);
 
             this.BaseNodeList.Add(rTreeMsg.Key, RefleTest.CreateTree(rTreeBase, rTreeBase.TreeID, rTreeMsg.Value[0]));
+            this.mAllMsg.Add(rTreeBase.TreeID, new Dictionary<string, AIAction>());
         }
     }
 
@@ -73,6 +74,8 @@ public class BehaviorTreeController : MonoBehaviour
         {
             rTree[rSignName] = rAction;
         }
+        else
+            rTree.Add(rSignName, rAction);
     }
 
     /// <summary>

@@ -47,10 +47,11 @@ public class RefleTest
     {
         string s;
         s = configTest.NodeName[int.Parse(rTreesMsg[1])];
-        Debug.Log(s);
+        //Debug.Log(s);
         TreeNode rTree = (TreeNode)Activator.CreateInstance(Type.GetType(s));
         rTree.ID = key;
-        rTree.Priority = int.Parse(rTreesMsg[2]);
+        if (!string.IsNullOrEmpty(rTreesMsg[2].Trim()))
+            rTree.Priority = int.Parse(rTreesMsg[2].Trim());
         if (rTreesMsg[3] != "")
         {
             List<string> cNodes = new List<string>(rTreesMsg[3].Split('.'));

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SingleTest : SingleNode
 {
+    public SingleTest() : base(0)
+    {
+    }
+
     public SingleTest(int Priority = 0) : base(Priority)
     {
     }

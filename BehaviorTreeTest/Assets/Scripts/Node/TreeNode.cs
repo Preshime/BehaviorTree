@@ -165,13 +165,14 @@ public abstract class ControllerNode : TreeNode
 /// </summary>
 public abstract class ActionController : TreeNode
 {
-    private string mWorldFlag;
+    private bool bIsWorldTag;
+    private string mTag;
 
-    public ActionController(int rPriority, string rWorldFlag)
+    public ActionController(int rPriority, string rTag, bool bIsWorld)
     {
         this.NodeType = NodeType.ActionNode;
         this.Priority = rPriority;
-        this.mWorldFlag = rWorldFlag;
+        this.mTag = rTag;
     }
 
     public override bool AddNode(TreeNode rNode)
@@ -188,11 +189,13 @@ public abstract class ActionController : TreeNode
 
     public override bool Play(bool IsOverride = false)
     {
-        if ((IsOverride || !this.mIsPlay) && (string.IsNullOrEmpty(this.mWorldFlag) || WorldModel.Instance.CanPlay(this.mWorldFlag)) && this.CheckSelf())
+        if (/*(IsOverride || !this.mIsPlay) && */(bIsWorldTag && (string.IsNullOrEmpty(this.mTag) || WorldModel.Instance.CanPlay(this.mTag))) || this.CheckSelf())
         {
             this.mIsPlay = true;
-            if (string.IsNullOrEmpty(this.mWorldFlag) || WorldModel.Instance.CanPlay(mWorldFlag))
-                WorldModel.Instance.SetTagIsPlayed(this.mWorldFlag);
+            if (bIsWorldTag)
+                WorldModel.Instance.SetTagIsPlayed(this.mTag);
+            else
+                this.Model.SetTagIsPlayed(this.mTag);
             this.Action();
             return true;
         }

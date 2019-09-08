@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    private List<AIAction> mActions = new List<AIAction>();
+    private Dictionary<string, AIAction> mActions = new Dictionary<string, AIAction>();
 
     public float Speed;
     public float AddSpeed;
@@ -27,27 +27,29 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         this.mCC = this.GetComponent<CharacterController>();
+        this.mActions.Add("Move", null);
+        this.mActions.Add("Color", null);
     }
 
     void Update()
     {
-        for (int i = 0; i < mActions.Count; i++)
+        List<string> rList = new List<string>();
+        foreach (var r in mActions)
+        {
+            rList.Add(r.Key);
+        }
+        foreach (var rKey in rList)
         {
             //判断行为
-            if (mActions[i] != BehaviorTreeController.Instance.GetAction(TreeID, mActions[i].SignName))
-                mActions[i] = BehaviorTreeController.Instance.GetAction(TreeID, mActions[i].SignName);
+            if (mActions[rKey] != BehaviorTreeController.Instance.GetAction(TreeID, rKey))
+                mActions[rKey] = BehaviorTreeController.Instance.GetAction(TreeID, rKey);
             //进行行为
-            mActions[i]?.OnUpdate(this.gameObject);
-        }
-        //是否结束
-        List<AIAction> rCopy = new List<AIAction>();
-        rCopy.AddRange(mActions);
-        foreach (var rA in rCopy)
-        {
-            if (rA.IsEnd)
+            mActions[rKey]?.OnUpdate(this.gameObject);
+            //是否结束
+            if (mActions[rKey]?.IsEnd ?? false)
             {
-                BehaviorTreeController.Instance.SetActionEnd(TreeID, rA.SignName);
-                this.mActions.Remove(rA);
+                BehaviorTreeController.Instance.SetActionEnd(TreeID, rKey);
+                mActions[rKey] = null;
             }
         }
     }

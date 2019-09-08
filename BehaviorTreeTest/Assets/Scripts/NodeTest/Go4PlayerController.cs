@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Go4PlayerController : ActionController
 {
-    public Go4PlayerController(int rPriority) : base(rPriority, "Go4Player")
+    public Go4PlayerController() : base(0, "Go4Player", false) { }
+
+    public Go4PlayerController(int rPriority) : base(rPriority, "Go4Player", false)
     {
     }
 
     public override bool CheckSelf()
     {
         bool b = false;
-        if (this.Model.TryGetValue("Go4Player", out b) && b)
+        if (this.Model.TryGetValue("Go4Player", out b) && b && this.Model.CanPlay("Go4Player"))
         {
             return true;
         }

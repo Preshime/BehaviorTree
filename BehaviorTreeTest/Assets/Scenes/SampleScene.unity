@@ -1107,7 +1107,7 @@ MonoBehaviour:
   mCC: {fileID: 0}
   NowSpeed: 0
   ToStart: 1
-  mTreeID: 1
+  TreeID: 2
 --- !u!143 &2031535818
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1194,7 +1194,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031535816}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2453916, y: 1.38, z: -0.67524254}
+  m_LocalPosition: {x: 20, y: 1.38, z: -0.67524254}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1241,7 +1241,7 @@ MonoBehaviour:
   mCC: {fileID: 0}
   NowSpeed: 0
   ToStart: 1
-  mTreeID: 1
+  TreeID: 1
 --- !u!143 &2077181582
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1328,7 +1328,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2077181580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2453916, y: 1.38, z: -0.67524254}
+  m_LocalPosition: {x: 20, y: 1.38, z: -0.67524254}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

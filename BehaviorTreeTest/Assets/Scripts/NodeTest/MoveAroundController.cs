@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class MoveAroundController : ActionController
 {
-    public MoveAroundController(int rPriority) : base(rPriority, "MoveAround")
+    public MoveAroundController() : base(0, "MoveAround", false) { }
+
+    public MoveAroundController(int rPriority) : base(rPriority, "MoveAround", false)
     {
     }
 
     public override bool CheckSelf()
     {
         bool b = false;
-        if (WorldModel.Instance.TryGetValue("MoveAround", out b) && b)
+        if (this.Model.TryGetValue("MoveAround", out b) && b && this.Model.CanPlay("MoveAround"))
         {
             return true;
         }
@@ -28,5 +31,6 @@ public class MoveAroundController : ActionController
     {
 
     }
+
 
 }
