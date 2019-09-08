@@ -46,7 +46,6 @@ public class ConfigTest : MonoBehaviour
             }
             rTreeDic.Add(nTreeID, rMsgDic);
         }
-        Debug.Log(1111);
     }
 
 

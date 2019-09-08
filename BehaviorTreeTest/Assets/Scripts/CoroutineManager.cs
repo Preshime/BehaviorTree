@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class CoroutineManager : MonoBehaviour
 {
-    private static CoroutineManager _Instance;
+    public static CoroutineManager Instance { get; private set; }
 
-    public static CoroutineManager Instance
+    private void Awake()
     {
-        get
-        {
-            if (_Instance == null)
-                _Instance = new CoroutineManager();
-            return _Instance;
-        }
+        Instance = new CoroutineManager();
+    }
+
+    void Start()
+    {
+
     }
 
     public void Start(IEnumerator rIE)
@@ -21,8 +21,4 @@ public class CoroutineManager : MonoBehaviour
         this.StartCoroutine(rIE);
     }
 
-    private void Start()
-    {
-
-    }
 }
