@@ -9,6 +9,19 @@ public abstract class TreeNode
 {
     public int ID;
 
+    private int nTreeID;
+    public int TreeID
+    {
+        get
+        {
+            if (this.Parent == null)
+                return nTreeID;
+            else
+                return Parent.TreeID;
+        }
+        set { nTreeID = value; }
+    }
+
     public string Name;
 
     public NodeType NodeType;
@@ -32,7 +45,7 @@ public abstract class TreeNode
         }
     }
 
-    protected bool isPlay;
+    protected bool mIsPlay;
 
     public TreeNode Parent;
     protected List<TreeNode> Child;
@@ -153,7 +166,7 @@ public abstract class ActionController : TreeNode
 
     public ActionController(int rPriority, string rWorldFlag)
     {
-        NodeType = NodeType.ActionNode;
+        this.NodeType = NodeType.ActionNode;
         this.Priority = rPriority;
         this.mWorldFlag = rWorldFlag;
     }
@@ -162,7 +175,7 @@ public abstract class ActionController : TreeNode
 
     public override void Init()
     {
-        NodeType = NodeType.ActionNode;
+        this.NodeType = NodeType.ActionNode;
     }
 
     public override void OnDestory()
@@ -171,18 +184,20 @@ public abstract class ActionController : TreeNode
 
     public override bool Play(bool IsOverride = false)
     {
-        if ((IsOverride || !isPlay) && (string.IsNullOrEmpty(this.mWorldFlag) || WorldModel.Instance.CanPlay(this.mWorldFlag)) && CheckSelf())
+        if ((IsOverride || !this.mIsPlay) && (string.IsNullOrEmpty(this.mWorldFlag) || WorldModel.Instance.CanPlay(this.mWorldFlag)) && this.CheckSelf())
         {
-            isPlay = true;
+            this.mIsPlay = true;
+            if (string.IsNullOrEmpty(this.mWorldFlag) || WorldModel.Instance.CanPlay(mWorldFlag))
+                WorldModel.Instance.SetTagIsPlayed(this.mWorldFlag);
             this.Action();
             return true;
         }
         return false;
     }
 
-    public override void Stop() { if (isPlay) { isPlay = false; this.ActionEnd(); } }
+    public override void Stop() { if (mIsPlay) { mIsPlay = false; this.ActionEnd(); } }
 
-    public override int IsPlay() { return isPlay ? 1 : 0; }
+    public override int IsPlay() { return mIsPlay ? 1 : 0; }
 
     protected abstract void Action();
 

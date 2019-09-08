@@ -27,14 +27,14 @@ public abstract class QueueNode : ControllerNode
 
     public override int IsPlay()
     {
-        return isPlay ? 1 : 0;
+        return mIsPlay ? 1 : 0;
     }
 
     public override bool Play(bool IsOverride)
     {
         if (Child != null && CheckSelf())
         {
-            isPlay = true;
+            mIsPlay = true;
             nPlayIndex = 0;
             Child[0].Play();
             Action<int> action = t =>
@@ -50,7 +50,7 @@ public abstract class QueueNode : ControllerNode
 
     public override void Stop()
     {
-        isPlay = false;
+        mIsPlay = false;
         if (Child != null && nPlayIndex < Child.Count)
         {
             Child[nPlayIndex].Stop();
@@ -73,7 +73,7 @@ public abstract class QueueNode : ControllerNode
 
     private void StartQueue()
     {
-        while (isPlay)
+        while (mIsPlay)
         {
             new WaitForSeconds(CheckTime);
             if (Child[PlayIndex].IsPlay() == 0)

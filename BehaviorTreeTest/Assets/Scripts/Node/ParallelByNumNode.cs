@@ -32,7 +32,7 @@ public abstract class ParallelByNumNode : ControllerNode
             {
                 if (Child[i].CheckSelf())
                 {
-                    if (!isPlay) isPlay = true;
+                    if (!mIsPlay) mIsPlay = true;
                     Child[i].Play();
                     if (++nPlayNum >= ParallelNum)
                         break;
@@ -46,6 +46,6 @@ public abstract class ParallelByNumNode : ControllerNode
     public override void Stop()
     {
         base.Stop();
-        isPlay = false;
+        mIsPlay = false;
     }
 }

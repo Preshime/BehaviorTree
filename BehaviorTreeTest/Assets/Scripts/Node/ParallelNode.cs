@@ -20,10 +20,10 @@ public abstract class ParallelNode : ControllerNode
         {
             for (int i = 0; i < Child.Count; i++)
             {
-                isPlay = true;
+                mIsPlay = true;
                 Child[i].Play();
             }
-            return isPlay;
+            return mIsPlay;
         }
         return false;
     }
@@ -32,6 +32,6 @@ public abstract class ParallelNode : ControllerNode
     {
         base.Stop();
         nPlayNum = 0;
-        isPlay = false;
+        mIsPlay = false;
     }
 }

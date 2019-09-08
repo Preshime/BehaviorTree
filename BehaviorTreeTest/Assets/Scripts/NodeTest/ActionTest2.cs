@@ -14,8 +14,6 @@ public class ActionTest2 : ActionController
         bool b;
         if ((Model.TryGetValue("action2", out b) && b))
         {
-            //Model.SetTagIsPlayed("action2");
-            //Model.SetTagIsPlayed("111");
             return true;
         }
         return false;

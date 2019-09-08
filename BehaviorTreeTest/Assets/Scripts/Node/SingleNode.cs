@@ -18,7 +18,7 @@ public abstract class SingleNode : ControllerNode
         {
             for (int i = 0; i < Child.Count; i++)
             {
-                isPlay = true;
+                mIsPlay = true;
                 if (Child[i].Play())
                     return true;
             }
@@ -28,12 +28,12 @@ public abstract class SingleNode : ControllerNode
 
     public override void Stop()
     {
-        isPlay = false;
+        mIsPlay = false;
         base.Stop();
     }
 
     public override int IsPlay()
     {
-        return isPlay ? 1 : 0;
+        return mIsPlay ? 1 : 0;
     }
 }
