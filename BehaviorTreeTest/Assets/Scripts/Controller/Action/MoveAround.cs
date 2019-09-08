@@ -6,6 +6,14 @@ public class MoveAround : AIAction
 {
     private EnemyController mEC;
 
+    public MoveAround()
+    {
+        Debug.Log("创建了一个巡逻");
+    }
+
+    public bool IsEnd { get; set; }
+    public string SignName { get; set; }
+
     public void OnUpdate(GameObject rGO)
     {
         //巡逻

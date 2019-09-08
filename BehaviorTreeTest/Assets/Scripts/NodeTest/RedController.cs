@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Red : ActionController
+public class RedController : ActionController
 {
-    public Red(int rPriority) : base(rPriority, "Red")
+    public RedController(int rPriority) : base(rPriority, "Red")
     {
     }
 
     public override bool CheckSelf()
     {
         bool b = false;
-        if (Model.TryGetValue("Red", out b) && b)
+        if (WorldModel.Instance.TryGetValue("Red", out b) && b)
         {
             return true;
         }
@@ -20,11 +20,10 @@ public class Red : ActionController
 
     protected override void Action()
     {
-        throw new System.NotImplementedException();
+        BehaviorTreeController.Instance.SetAction(TreeID, "Color", new Red() { IsEnd = false, SignName = "Color" });
     }
 
     protected override void ActionEnd()
     {
-        throw new System.NotImplementedException();
     }
 }

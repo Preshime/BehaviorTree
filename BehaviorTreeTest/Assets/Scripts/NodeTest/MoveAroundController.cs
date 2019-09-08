@@ -21,7 +21,7 @@ public class MoveAroundController : ActionController
 
     protected override void Action()
     {
-        BehaviorTreeController.Instance.SetAction(this.TreeID, "Move", new MoveAround());
+        BehaviorTreeController.Instance.SetAction(this.TreeID, "Move", new MoveAround() { IsEnd = false, SignName = "Move" });
     }
 
     protected override void ActionEnd()

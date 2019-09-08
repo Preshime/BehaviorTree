@@ -1004,6 +1004,7 @@ GameObject:
   - component: {fileID: 1731795475}
   - component: {fileID: 1731795476}
   - component: {fileID: 1731795477}
+  - component: {fileID: 1731795478}
   m_Layer: 0
   m_Name: BehaviorTreeMono
   m_TagString: Untagged
@@ -1049,6 +1050,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c809afe7c2d01b4985b687357707f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1731795478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731795474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 600872132bc1cab47bef71b96632bed3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 2095739637}
+  Enemys:
+  - {fileID: 2077181581}
+  - {fileID: 2031535817}
 --- !u!1 &2031535816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,6 +1103,11 @@ MonoBehaviour:
   AddSpeed: 0.01
   StartPos: {x: 20, y: 1, z: 2}
   EndPos: {x: 0, y: 1, z: 30}
+  Player: {fileID: 2095739637}
+  mCC: {fileID: 0}
+  NowSpeed: 0
+  ToStart: 1
+  mTreeID: 1
 --- !u!143 &2031535818
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1215,6 +1237,11 @@ MonoBehaviour:
   AddSpeed: 0.01
   StartPos: {x: 2, y: 1, z: 2}
   EndPos: {x: 25, y: 1, z: 50}
+  Player: {fileID: 2095739637}
+  mCC: {fileID: 0}
+  NowSpeed: 0
+  ToStart: 1
+  mTreeID: 1
 --- !u!143 &2077181582
 CharacterController:
   m_ObjectHideFlags: 0

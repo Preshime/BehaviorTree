@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ public class BehaviorTreeController : MonoBehaviour
 {
     public static BehaviorTreeController Instance { get; private set; }
 
-    Dictionary<int, BaseNode> mBaseNodeList = new Dictionary<int, BaseNode>();
+    public Dictionary<int, BaseNode> BaseNodeList = new Dictionary<int, BaseNode>();
     Dictionary<int, Dictionary<string, AIAction>> mAllMsg = new Dictionary<int, Dictionary<string, AIAction>>();
 
     void Start()
@@ -17,10 +18,10 @@ public class BehaviorTreeController : MonoBehaviour
     void Update()
     {
         WorldModel.Instance.OnUpdate();
-        for (int i = 0; i < mBaseNodeList.Count; i++)
+        for (int i = 0; i < BaseNodeList.Count; i++)
         {
-            mBaseNodeList[i].Play();
-            mBaseNodeList[i].Model.OnUpdate();
+            BaseNodeList[i].Play();
+            BaseNodeList[i].Model.OnUpdate();
         }
     }
 
@@ -34,9 +35,10 @@ public class BehaviorTreeController : MonoBehaviour
                 ID = rTreeMsg.Key,
             };
             rTreeBase.Model = new NodeModel(rTreeBase);
-            this.mBaseNodeList.Add(rTreeMsg.Key, rTreeBase);
+            this.BaseNodeList.Add(rTreeMsg.Key, rTreeBase);
         }
     }
+
 
     /// <summary>
     /// 获取状态动作的名字
@@ -44,13 +46,15 @@ public class BehaviorTreeController : MonoBehaviour
     /// <param name="nTreeID"></param>
     /// <param name="rSignName"></param>
     /// <returns></returns>
-    public AIAction GetActionName(int nTreeID, string rSignName)
+    public AIAction GetAction(int nTreeID, string rSignName)
     {
         Dictionary<string, AIAction> rTree;
         mAllMsg.TryGetValue(nTreeID, out rTree);
         AIAction rAction;
-        rTree.TryGetValue(rSignName, out rAction);
-        return rAction;
+        if (rTree.TryGetValue(rSignName, out rAction))
+            return rAction;
+        else
+            return null;
     }
 
     /// <summary>
@@ -66,6 +70,21 @@ public class BehaviorTreeController : MonoBehaviour
         if (rTree.ContainsKey(rSignName))
         {
             rTree[rSignName] = rAction;
+        }
+    }
+
+    /// <summary>
+    /// 动作完成
+    /// </summary>
+    /// <param name="nTreeID"></param>
+    /// <param name="rSignName"></param>
+    public void SetActionEnd(int nTreeID, string rSignName)
+    {
+        Dictionary<string, AIAction> rTree;
+        mAllMsg.TryGetValue(nTreeID, out rTree);
+        if (rTree.ContainsKey(rSignName))
+        {
+            rTree.Remove(rSignName);
         }
     }
 }
