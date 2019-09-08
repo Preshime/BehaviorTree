@@ -12,7 +12,6 @@ public class ActionTest2 : ActionController
     public override bool CheckSelf()
     {
         bool b;
-        string s;
         if ((Model.TryGetValue("action2", out b) && b))
         {
             //Model.SetTagIsPlayed("action2");

@@ -3,4 +3,4 @@
 2:ActionTest;
 3:SingleTest;
 4:QueueTest;
-5:ParallelNode;
+5:ParallelTest;
