@@ -171,7 +171,7 @@ public abstract class ActionController : TreeNode
 
     public override bool Play(bool IsOverride = false)
     {
-        if ((IsOverride || !isPlay) && (!string.IsNullOrEmpty(this.mWorldFlag)) && WorldModel.Instance.CanPlay(this.mWorldFlag) && CheckSelf())
+        if ((IsOverride || !isPlay) && (string.IsNullOrEmpty(this.mWorldFlag) || WorldModel.Instance.CanPlay(this.mWorldFlag)) && CheckSelf())
         {
             isPlay = true;
             this.Action();

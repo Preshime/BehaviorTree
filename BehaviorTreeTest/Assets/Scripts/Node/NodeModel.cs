@@ -137,8 +137,8 @@ public class NodeModel // 树上的所有数据来源
             return !b;
         else
         {
-            Debug.LogError("数据异常：" + rTag);
-            return false;
+            Debug.Log("不存在此tag:" + rTag);
+            return true;
         }
     }
 

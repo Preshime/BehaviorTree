@@ -15,6 +15,7 @@ public class BehaviorTreeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        WorldModel.Instance.OnUpdate();
         for (int i = 0; i < mBaseNodeList.Count; i++)
         {
             mBaseNodeList[i].Play();

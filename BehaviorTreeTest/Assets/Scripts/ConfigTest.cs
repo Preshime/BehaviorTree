@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class ConfigTest : MonoBehaviour
 {
+    private ConfigTest() { }
 
-    Dictionary<int, Dictionary<int, List<string>>> rTreeDic = new Dictionary<int, Dictionary<int, List<string>>>();
-    void Start()
+    public static ConfigTest Instance { get; private set; }
+
+    public Dictionary<int, Dictionary<int, List<string>>> rTreeDic = new Dictionary<int, Dictionary<int, List<string>>>();
+    public Dictionary<int, string> NodeName = new Dictionary<int, string>();
+
+    void Awake()
     {
+        Instance = this;
         Init();
     }
 
@@ -22,8 +28,8 @@ public class ConfigTest : MonoBehaviour
         //5,2,2,;]
         //2:
         //[]
-        TextAsset r = Resources.Load("Config") as TextAsset;
-        string rt = r.text.Replace("\n", "");
+        TextAsset rConfig = Resources.Load("Config") as TextAsset;
+        string rt = rConfig.text.Replace("\n", "");
         rt = rt.Replace("\r", "");
         string[] ss = rt.Split(':');
         for (int i = 0; i < ss.Length - 1; i++)
@@ -46,6 +52,22 @@ public class ConfigTest : MonoBehaviour
             }
             rTreeDic.Add(nTreeID, rMsgDic);
         }
+
+        TextAsset rNode = Resources.Load("NodeConfig") as TextAsset;
+        rt = rNode.text.Replace("\n", "");
+        rt = rt.Replace("\r", "");
+        ss = rt.Split(';');
+        for (int i = 0; i < ss.Length; i++)
+        {
+            string[] rNodeMsg = ss[i].Split(':');
+            if (!string.IsNullOrEmpty(rNodeMsg[0]))
+            {
+                int nNodeID = int.Parse(rNodeMsg[0]);
+                string rNodeName = rNodeMsg[1];
+                NodeName.Add(nNodeID, rNodeName);
+            }
+        }
+        Debug.Log("配置加载完成");
     }
 
 
