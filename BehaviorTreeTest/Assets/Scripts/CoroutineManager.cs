@@ -20,4 +20,9 @@ public class CoroutineManager : MonoBehaviour
     {
         this.StartCoroutine(rIE);
     }
+
+    private void Start()
+    {
+
+    }
 }

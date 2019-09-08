@@ -13,6 +13,15 @@ public class ConfigTest : MonoBehaviour
 
     public void Init()
     {
+        //1:                //树的ID
+        //[0,0,0,1.2.3;     //节点信息  id，种类，传入参数，子节点id
+        //1,1,2,;           //其中父节点的第一位仍表示id，但是没有意义，建议试用树id作为父节点id
+        //2,2,1,4.5;        //种类指通过另一个表/文件对应至string然后反射指向一个test类
+        //3,1,1,;
+        //4,2,,;
+        //5,2,2,;]
+        //2:
+        //[]
         TextAsset r = Resources.Load("Config") as TextAsset;
         string rt = r.text.Replace("\n", "");
         rt = rt.Replace("\r", "");
