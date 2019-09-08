@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ActionTest2 : ActionController
 {
-    public ActionTest2(int Priority = 0) : base(Priority)
+    public ActionTest2(int Priority = 0) : base(Priority, "action2")
     {
     }
 
@@ -13,7 +13,7 @@ public class ActionTest2 : ActionController
     {
         bool b;
         string s;
-        if ((Model.TryGetValue("action2", out b) && b) || (Model.TryGetValue("111", out s) && s == "111"))
+        if ((Model.TryGetValue("action2", out b) && b))
         {
             //Model.SetTagIsPlayed("action2");
             //Model.SetTagIsPlayed("111");

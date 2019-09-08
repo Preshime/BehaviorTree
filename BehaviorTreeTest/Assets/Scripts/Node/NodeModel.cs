@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class NodeModel // 树上的所有数据来源
 {
@@ -7,6 +8,7 @@ public class NodeModel // 树上的所有数据来源
     {
         BaseNode = rNode;
     }
+    public NodeModel() { }
 
     private TreeNode BaseNode;
 
@@ -16,14 +18,21 @@ public class NodeModel // 树上的所有数据来源
     private Dictionary<string, string> String = new Dictionary<string, string>();
     private Dictionary<string, object> Obj = new Dictionary<string, object>();
 
-    private Dictionary<string, bool> TagIsPlay = new Dictionary<string, bool>();
+    private Dictionary<string, bool> TagChanged = new Dictionary<string, bool>();
+
+    private Dictionary<string, bool> TagIsPlayed = new Dictionary<string, bool>();
 
     public void SetValue<T>(string key, T value)
     {
-        if (TagIsPlay.ContainsKey(key))
-            TagIsPlay[key] = false;
+        if (TagChanged.ContainsKey(key))
+            TagChanged[key] = false;
         else
-            TagIsPlay.Add(key, false);
+            TagChanged.Add(key, false);
+
+        if (TagIsPlayed.ContainsKey(key))
+            TagIsPlayed[key] = false;
+        else
+            TagIsPlayed.Add(key, false);
 
         if (typeof(T) == typeof(int))
         {
@@ -66,13 +75,12 @@ public class NodeModel // 树上的所有数据来源
                 Obj.Add(key, o);
         }
 
-        BaseNode.Play();
     }
 
     public bool TryGetValue<T>(string key, out T obj)
     {
         bool bIsPlayed;
-        if (!TagIsPlay.TryGetValue(key, out bIsPlayed) || bIsPlayed)
+        if (!TagChanged.TryGetValue(key, out bIsPlayed) || bIsPlayed)
         {
             obj = default(T);
             return false;
@@ -116,9 +124,33 @@ public class NodeModel // 树上的所有数据来源
 
     public void SetTagIsPlayed(string tag)
     {
-        if (TagIsPlay.ContainsKey(tag))
-            TagIsPlay[tag] = true;
+        if (TagIsPlayed.ContainsKey(tag))
+            TagIsPlayed[tag] = true;
         else
-            TagIsPlay.Add(tag, true);
+            TagIsPlayed.Add(tag, true);
+    }
+
+    public bool CanPlay(string rTag)
+    {
+        bool b;
+        if (TagIsPlayed.TryGetValue(rTag, out b))
+            return !b;
+        else
+        {
+            Debug.LogError("数据异常：" + rTag);
+            return false;
+        }
+    }
+
+    public void OnUpdate()
+    {
+        foreach (var tag in TagChanged)
+        {
+            string key = tag.Key;
+            if (TagIsPlayed[key] && !TagChanged[key])
+            {
+                TagChanged[key] = true;
+            }
+        }
     }
 }

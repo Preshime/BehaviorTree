@@ -7,6 +7,8 @@ using UnityEngine;
 //父类
 public abstract class TreeNode
 {
+    public int ID;
+
     public string Name;
 
     public NodeType NodeType;
@@ -147,7 +149,16 @@ public abstract class ControllerNode : TreeNode
 /// </summary>
 public abstract class ActionController : TreeNode
 {
-    public ActionController(int Priority) { NodeType = NodeType.ActionNode; this.Priority = Priority; }
+    private string mWorldFlag;
+
+    public ActionController(int rPriority, string rWorldFlag)
+    {
+        NodeType = NodeType.ActionNode;
+        this.Priority = rPriority;
+        this.mWorldFlag = rWorldFlag;
+    }
+
+
 
     public override void Init()
     {
@@ -160,7 +171,7 @@ public abstract class ActionController : TreeNode
 
     public override bool Play(bool IsOverride = false)
     {
-        if ((IsOverride || !isPlay) && CheckSelf())
+        if ((IsOverride || !isPlay) && (!string.IsNullOrEmpty(this.mWorldFlag)) && WorldModel.Instance.CanPlay(this.mWorldFlag) && CheckSelf())
         {
             isPlay = true;
             this.Action();
