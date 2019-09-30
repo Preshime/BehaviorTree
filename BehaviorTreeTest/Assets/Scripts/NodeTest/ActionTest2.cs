@@ -5,29 +5,19 @@ using UnityEngine;
 
 public class ActionTest2 : ActionController
 {
-    public ActionTest2(int Priority = 0) : base(Priority, "action2", false)
+    public ActionTest2(int Priority = 0) : base(Priority, false)
     {
     }
 
-    public override bool CheckSelf()
-    {
-        bool b;
-        if ((Model.TryGetValue("action2", out b) && b))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    protected override void Action()
-    {
-        Debug.Log($"{Name}:action Start");
-        Action<int> action = i =>
-         {
-             Act(i);
-         };
-        action.BeginInvoke(0, null, null);
-    }
+    //public override bool CheckSelf()
+    //{
+    //    bool b;
+    //    if ((Model.TryGetValue("action2", out b) && b))
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
     protected override void ActionEnd()
     {

@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     public float Speed;
 
+    public bool IsMoving;
+
     CharacterController mCC;
 
     void Start()
@@ -19,5 +21,6 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         mCC.Move(new Vector3(x, 0, y) * Speed);
+        IsMoving = x == 0 && y == 0;
     }
 }

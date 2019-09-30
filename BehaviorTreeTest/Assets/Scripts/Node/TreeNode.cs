@@ -57,7 +57,12 @@ public abstract class TreeNode
     public abstract int IsPlay();
     public abstract bool Play(bool IsOverride = false);
     public abstract void Stop();
-    public abstract bool CheckSelf();
+
+    public Check Check;
+    public bool CheckSelf()
+    {
+        return Check?.CheckSelf() ?? false;
+    }
     public abstract bool AddNode(TreeNode rNode);
 }
 
@@ -165,14 +170,11 @@ public abstract class ControllerNode : TreeNode
 /// </summary>
 public abstract class ActionController : TreeNode
 {
-    private bool bIsWorldTag;
-    private string mTag;
-
-    public ActionController(int rPriority, string rTag, bool bIsWorld)
+    private string mActionTag;
+    public ActionController(int rPriority, bool bIsWorld)
     {
         this.NodeType = NodeType.ActionNode;
         this.Priority = rPriority;
-        this.mTag = rTag;
     }
 
     public override bool AddNode(TreeNode rNode)
@@ -189,13 +191,13 @@ public abstract class ActionController : TreeNode
 
     public override bool Play(bool IsOverride = false)
     {
-        if (/*(IsOverride || !this.mIsPlay) && */(bIsWorldTag && (string.IsNullOrEmpty(this.mTag) || WorldModel.Instance.CanPlay(this.mTag))) || this.CheckSelf())
+        if (this.CheckSelf())
         {
             this.mIsPlay = true;
-            if (bIsWorldTag)
-                WorldModel.Instance.SetTagIsPlayed(this.mTag);
-            else
-                this.Model.SetTagIsPlayed(this.mTag);
+            //if (bIsWorldTag)
+            //    WorldModel.Instance.SetTagIsPlayed(this.mTag);
+            //else
+            //    this.Model.SetTagIsPlayed(this.mTag);
             this.Action();
             return true;
         }
@@ -206,7 +208,10 @@ public abstract class ActionController : TreeNode
 
     public override int IsPlay() { return mIsPlay ? 1 : 0; }
 
-    protected abstract void Action();
+    protected void Action()
+    {
+        BehaviorTreeController.Instance.SetAction(TreeID, mActionTag, new Red() { IsEnd = false, SignName = mActionTag });
+    }
 
     protected abstract void ActionEnd();
 }

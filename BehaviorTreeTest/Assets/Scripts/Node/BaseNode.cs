@@ -10,10 +10,10 @@ public class BaseNode : ControllerNode
         this.Priority = 0;
     }
 
-    public override bool CheckSelf()
-    {
-        return true;
-    }
+    //public override bool CheckSelf()
+    //{
+    //    return true;
+    //}
 
     public override int IsPlay()
     {

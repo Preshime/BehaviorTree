@@ -12,10 +12,10 @@ public class SingleTest : SingleNode
     {
     }
 
-    public override bool CheckSelf()
-    {
-        int i;
-        return Model.TryGetValue("single", out i) && i < 5;
-    }
+    //public override bool CheckSelf()
+    //{
+    //    int i;
+    //    return Model.TryGetValue("single", out i) && i < 5;
+    //}
 
 }

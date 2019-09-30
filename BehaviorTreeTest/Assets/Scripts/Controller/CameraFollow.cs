@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public GameObject player;
+    public PlayerController player;
 
     private Vector3 distance;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (player != null)
-            distance = this.transform.position - player.transform.position;
+            distance = player.transform.position - this.transform.position;
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
         if (player != null)
-            this.transform.position = player.transform.position + distance;
+        {
+            Vector3 rEndDis = distance;
+            if (player.IsMoving)
+                rEndDis -= rEndDis.normalized * 1f;
+            this.transform.position = Vector3.Lerp(this.transform.position, player.transform.position - rEndDis, 0.1f);
+        }
     }
 }

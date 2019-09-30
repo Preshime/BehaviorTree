@@ -8,9 +8,9 @@ public class QueueTest : QueueNode
     {
     }
 
-    public override bool CheckSelf()
-    {
-        string ss;
-        return Model.TryGetValue("queue", out ss) && ss == "111";
-    }
+    //public override bool CheckSelf()
+    //{
+    //    string ss;
+    //    return Model.TryGetValue("queue", out ss) && ss == "111";
+    //}
 }

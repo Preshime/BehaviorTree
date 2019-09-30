@@ -6,30 +6,25 @@ using System.Threading;
 
 public class ActionTest : ActionController
 {
-    public ActionTest(int Priority = 0) : base(Priority, "action", false)
+    public ActionTest(int Priority = 0) : base(Priority, false)
     {
     }
 
-    public override bool CheckSelf()
-    {
-        bool b = false;
-        if (Model.TryGetValue("action", out b) && b)
-        {
-            Model.SetTagIsPlayed("action");
-            return true;
-        }
-        return false;
-    }
+    //public override bool CheckSelf()
+    //{
+    //    bool b = false;
+    //    if (Model.TryGetValue("action", out b) && b)
+    //    {
+    //        Model.SetTagIsPlayed("action");
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
-    protected override void Action()
-    {
-        Debug.Log($"{Name}:action Start");
-        //Action<bool> action = b =>
-        // {
-        //     Act(b);
-        // };
-        //action.BeginInvoke(true, null, null);
-    }
+    //protected override void Action()
+    //{
+    //    Debug.Log($"{Name}:action Start");
+    //}
 
     protected override void ActionEnd()
     {
